@@ -1,0 +1,20 @@
+{
+  "version": 1,
+  "jsconfig": {
+    "created": false,
+    "originalContent": "{ \"compilerOptions\": { \"baseUrl\": \".\", \"paths\": { \"@/*\": [\"./*\"] } } }\n"
+  },
+  "settings": {
+    "fileCreated": true,
+    "directoryCreated": true,
+    "added": {
+      "files.exclude": [
+        ".gas-sync"
+      ],
+      "search.exclude": [
+        ".gas-sync"
+      ]
+    }
+  },
+  "typingsVersion": "2.0.8"
+}
