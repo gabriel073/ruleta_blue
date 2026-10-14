@@ -19,14 +19,24 @@ function doPost(event) {
     ensureHeaders(sheet);
 
     if (data.action === "register") {
-      if (!data.id || !data.name || !data.email) {
-        return jsonResponse({ ok: false, error: "Faltan datos del participante." });
+      const missing = [];
+      if (!data.id) missing.push("ID");
+      if (typeof data.name !== "string" || !data.name.trim()) missing.push("nombre");
+      if (typeof data.whatsapp !== "string" || !/^\d{10}$/.test(data.whatsapp)) {
+        missing.push("WhatsApp de 10 números, sin prefijo");
+      }
+        if (data.whatsappConsent !== true) missing.push("autorización de WhatsApp");
+      if (missing.length) {
+        return jsonResponse({ ok: false, error: `Faltan datos válidos: ${missing.join(", ")}.` });
       }
 
       const lock = LockService.getScriptLock();
       lock.waitLock(10000);
       try {
-        sheet.appendRow([data.createdAt || new Date().toISOString(), data.id, data.name, data.email, "", ""]);
+        const createdAt = data.createdAt ? new Date(data.createdAt) : new Date();
+        const row = sheet.getLastRow() + 1;
+          sheet.getRange(row, 1, 1, 7).setValues([[createdAt, data.id, data.name, data.whatsapp, "", "", "Sí"]]);
+        sheet.getRange(row, 1).setNumberFormat("dd-MM-yyyy HH:mm");
       } finally {
         lock.releaseLock();
       }
@@ -47,7 +57,9 @@ function doPost(event) {
         .findNext();
       if (!match) return jsonResponse({ ok: false, error: "No se encontró el participante." });
 
-      sheet.getRange(match.getRow(), 5, 1, 2).setValues([[data.prize, new Date().toISOString()]]);
+      const row = match.getRow();
+      sheet.getRange(row, 5, 1, 2).setValues([[data.prize, new Date()]]);
+      sheet.getRange(row, 6).setNumberFormat("dd-MM-yyyy HH:mm");
       return jsonResponse({ ok: true });
     }
 
@@ -59,8 +71,27 @@ function doPost(event) {
 
 function ensureHeaders(sheet) {
   if (sheet.getLastRow() === 0) {
-    sheet.appendRow(["Fecha", "ID", "Nombre", "Correo", "Premio", "Actualizado"]);
+    sheet.appendRow(["Fecha y hora", "ID", "Nombre", "WhatsApp", "Premio", "Actualizado", "Autorización WhatsApp"]);
+  } else {
+    const headers = sheet.getRange(1, 1, 1, 7).getValues()[0];
+      if (!headers[6]) sheet.getRange(1, 7).setValue("Autorización WhatsApp");
+    if (headers[0] === "Fecha") sheet.getRange(1, 1).setValue("Fecha y hora");
+    if (headers[3] === "Correo") sheet.getRange(1, 4).setValue("WhatsApp");
   }
+
+  const lastRow = sheet.getLastRow();
+  if (lastRow < 2) return;
+
+  [1, 6].forEach((column) => {
+    const range = sheet.getRange(2, column, lastRow - 1, 1);
+    const values = range.getValues().map(([value]) => {
+      if (typeof value !== "string" || !/^\d{4}-\d{2}-\d{2}T/.test(value)) return [value];
+      const parsed = new Date(value);
+      return [Number.isNaN(parsed.getTime()) ? value : parsed];
+    });
+    range.setValues(values);
+    range.setNumberFormat("dd-MM-yyyy HH:mm");
+  });
 }
 
 function jsonResponse(value) {

@@ -65,16 +65,17 @@ async function sendToSheets(payload) {
 
 export async function POST(request) {
   try {
-    const { id, name, email } = await request.json();
-    if (!id || typeof name !== "string" || name.trim().length < 2 || typeof email !== "string" || !/^\S+@\S+\.\S+$/.test(email)) {
-      return NextResponse.json({ ok: false, error: "Los datos del participante no son válidos." }, { status: 400 });
+    const { id, name, whatsapp, whatsappConsent } = await request.json();
+    if (!id || typeof name !== "string" || name.trim().length < 2 || typeof whatsapp !== "string" || !/^\d{10}$/.test(whatsapp) || whatsappConsent !== true) {
+      return NextResponse.json({ ok: false, error: "Ingresá el nombre, un WhatsApp de 10 dígitos y aceptá recibir el aviso." }, { status: 400 });
     }
 
     return sendToSheets({
       action: "register",
       id,
       name: name.trim(),
-      email: email.trim(),
+      whatsapp: whatsapp.trim(),
+      whatsappConsent,
       createdAt: new Date().toISOString(),
     });
   } catch {

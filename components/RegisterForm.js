@@ -1,11 +1,12 @@
 "use client";
 import { useState } from "react";
 
-const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
+const WHATSAPP_RE = /^\d{10}$/;
 
 export default function RegisterForm({ onSubmit }) {
   const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
+  const [whatsapp, setWhatsapp] = useState("");
+  const [whatsappConsent, setWhatsappConsent] = useState(false);
   const [errors, setErrors] = useState({});
   const [submitting, setSubmitting] = useState(false);
 
@@ -14,12 +15,15 @@ export default function RegisterForm({ onSubmit }) {
     if (submitting) return;
     const next = {};
     if (name.trim().length < 2) next.name = "Escribí tu nombre.";
-    if (!EMAIL_RE.test(email.trim())) next.email = "Revisá el mail, parece incompleto.";
+    if (!WHATSAPP_RE.test(whatsapp)) {
+      next.whatsapp = "Ingresá exactamente 10 números, sin prefijo.";
+    }
+    if (!whatsappConsent) next.whatsappConsent = "Necesitamos tu autorización para enviarte el resultado por WhatsApp.";
     setErrors(next);
     if (Object.keys(next).length === 0) {
       setSubmitting(true);
       try {
-        await onSubmit({ name: name.trim(), email: email.trim() });
+        await onSubmit({ name: name.trim(), whatsapp: whatsapp.trim(), whatsappConsent });
       } catch (error) {
         setErrors({ submit: error.message || "No se pudo guardar el registro. Probá de nuevo." });
       } finally {
@@ -58,18 +62,34 @@ export default function RegisterForm({ onSubmit }) {
         </label>
 
         <label className="mt-4 block">
-          <span className="mb-1 block font-bold">Mail</span>
+          <span className="mb-1 block font-bold">Número de WhatsApp</span>
           <input
-            type="email"
+            type="tel"
             className={field}
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            placeholder="tumail@ejemplo.com"
-            autoComplete="email"
-            aria-invalid={!!errors.email}
+            value={whatsapp}
+            onChange={(e) => setWhatsapp(e.target.value.replace(/\D/g, "").slice(0, 10))}
+            placeholder="Ej: 1123456789"
+            autoComplete="tel"
+            inputMode="tel"
+            maxLength={10}
+            minLength={10}
+            pattern="[0-9]{10}"
+            aria-invalid={!!errors.whatsapp}
           />
-          {errors.email && <span className="mt-1 block text-sm font-bold text-rose-600">{errors.email}</span>}
+          {errors.whatsapp && <span className="mt-1 block text-sm font-bold text-rose-600">{errors.whatsapp}</span>}
         </label>
+
+        <label className="mt-5 flex items-start gap-3 text-sm font-semibold text-blue-800">
+          <input
+            type="checkbox"
+            checked={whatsappConsent}
+            onChange={(event) => setWhatsappConsent(event.target.checked)}
+            className="mt-1 h-5 w-5 accent-blue-700"
+            aria-invalid={!!errors.whatsappConsent}
+          />
+          <span>Acepto recibir por WhatsApp un mensaje con el resultado si gano.</span>
+        </label>
+        {errors.whatsappConsent && <span className="mt-1 block text-sm font-bold text-rose-600">{errors.whatsappConsent}</span>}
 
         <button
           type="submit"
