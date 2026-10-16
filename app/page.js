@@ -69,9 +69,9 @@ export default function Home() {
       {step === "splash" && <Splash onStart={() => setStep("form")} />}
       {step === "form" && <RegisterForm onSubmit={handleRegister} />}
       {step === "wheel" && (
-        <section className="flex min-h-screen flex-col items-center justify-center px-5 py-10">
+        <section className="flex min-h-screen flex-col items-center justify-center bg-[#e8d3ac] px-5 py-10">
           <div className="animate-idle">
-            <LogoMark width={230} height={96} />
+            <LogoMark width="min(460px, 90vw)" height="min(192px, 38vw)" />
           </div>
           <p className="mb-2 mt-2 text-center text-xl font-bold text-blue-800">
             ¡Mucha suerte, {user.name}!

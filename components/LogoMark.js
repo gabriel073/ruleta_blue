@@ -1,4 +1,4 @@
-const LOGO_MASK = "url('/assets/logo-blue-azul.png')";
+const LOGO_SRC = "/assets/logo-blue_sinFondoSVG.svg";
 
 export default function LogoMark({ width = 220, height = 90, round = false, className = "", style }) {
   return (
@@ -13,25 +13,18 @@ export default function LogoMark({ width = 220, height = 90, round = false, clas
         padding: round ? "8%" : 8,
         overflow: "hidden",
         borderRadius: round ? "50%" : 12,
-        backgroundColor: "#dcecff",
-        filter: "drop-shadow(0 8px 14px rgba(35,78,146,0.35)) drop-shadow(0 0 18px rgba(143,189,245,0.7))",
+        backgroundColor: "transparent",
         ...style,
       }}
     >
-      <div
+      <img
+        src={LOGO_SRC}
+        alt=""
         aria-hidden="true"
         style={{
           width: "100%",
           height: "100%",
-          backgroundColor: "#234e92",
-          WebkitMaskImage: LOGO_MASK,
-          maskImage: LOGO_MASK,
-          WebkitMaskSize: "contain",
-          maskSize: "contain",
-          WebkitMaskRepeat: "no-repeat",
-          maskRepeat: "no-repeat",
-          WebkitMaskPosition: "center",
-          maskPosition: "center",
+          objectFit: "contain",
         }}
       />
     </div>

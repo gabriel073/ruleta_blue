@@ -41,45 +41,40 @@ function spinProgress(progress) {
   return cubicBezierCoordinate(parameter, 0.62, 1);
 }
 
-// Texto del gajo: horizontal si es corto (5% OFF), en vertical (a lo largo del radio) si no entra.
+// Mantiene las dos líneas horizontales y reduce el tamaño según el largo de cada texto.
 function SegmentLabel({ prize, index }) {
   const angle = index * SEG + SEG / 2;
-  const short = prize.label[0].length <= 4;
-  if (short) {
-    return (
-      <g transform={`rotate(${angle} ${C} ${C})`}>
-        <text x={C} y={C - R * 0.62} textAnchor="middle" fill={prize.ink} fontWeight="900" fontSize="36" style={{ paintOrder: "stroke" }} stroke="rgba(255,255,255,0.35)" strokeWidth="1.5">
-          {prize.label[0]}
-        </text>
-        <text x={C} y={C - R * 0.62 + 24} textAnchor="middle" fill={prize.ink} fontWeight="800" fontSize="19" letterSpacing="2">
-          {prize.label[1]}
-        </text>
-      </g>
-    );
-  }
-  const maxLen = Math.max(prize.label[0].length, prize.label[1].length);
-  const size = Math.min(18, 122 / (maxLen * 0.6));
-  const y0 = C - R * 0.63; // centro del texto sobre el radio
+  const maxLabelWidth = 104;
+  const firstSize = Math.min(30, maxLabelWidth / (prize.label[0].length * 0.62));
+  const secondSize = Math.min(22, maxLabelWidth / (prize.label[1].length * 0.62));
+  const y = C - R * 0.65;
+
   return (
     <g transform={`rotate(${angle} ${C} ${C})`}>
-      {prize.label.map((line, k) => {
-        const x = C + (k === 0 ? -size * 0.7 : size * 0.7);
-        return (
-          <text
-            key={k}
-            x={x}
-            y={y0}
-            transform={`rotate(-90 ${x} ${y0})`}
-            textAnchor="middle"
-            dominantBaseline="central"
-            fill={prize.ink}
-            fontWeight={k === 0 ? 900 : 800}
-            fontSize={size}
-          >
-            {line}
-          </text>
-        );
-      })}
+      <text
+        x={C}
+        y={y}
+        textAnchor="middle"
+        fill={prize.ink}
+        fontWeight="900"
+        fontSize={firstSize}
+        style={{ paintOrder: "stroke" }}
+        stroke="rgba(255,255,255,0.35)"
+        strokeWidth="1.5"
+      >
+        {prize.label[0]}
+      </text>
+      <text
+        x={C}
+        y={y + 22}
+        textAnchor="middle"
+        fill={prize.ink}
+        fontWeight="800"
+        fontSize={secondSize}
+        letterSpacing={prize.label[1].length <= 3 ? 2 : 0}
+      >
+        {prize.label[1]}
+      </text>
     </g>
   );
 }
