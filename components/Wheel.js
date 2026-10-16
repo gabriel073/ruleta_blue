@@ -51,30 +51,32 @@ function SegmentLabel({ prize, index }) {
 
   return (
     <g transform={`rotate(${angle} ${C} ${C})`}>
-      <text
-        x={C}
-        y={y}
-        textAnchor="middle"
-        fill={prize.ink}
-        fontWeight="900"
-        fontSize={firstSize}
-        style={{ paintOrder: "stroke" }}
-        stroke="rgba(255,255,255,0.35)"
-        strokeWidth="1.5"
-      >
-        {prize.label[0]}
-      </text>
-      <text
-        x={C}
-        y={y + 22}
-        textAnchor="middle"
-        fill={prize.ink}
-        fontWeight="800"
-        fontSize={secondSize}
-        letterSpacing={prize.label[1].length <= 3 ? 2 : 0}
-      >
-        {prize.label[1]}
-      </text>
+      <g transform={`rotate(${-angle} ${C} ${y})`}>
+        <text
+          x={C}
+          y={y}
+          textAnchor="middle"
+          fill={prize.ink}
+          fontWeight="900"
+          fontSize={firstSize}
+          style={{ paintOrder: "stroke" }}
+          stroke="rgba(255,255,255,0.35)"
+          strokeWidth="1.5"
+        >
+          {prize.label[0]}
+        </text>
+        <text
+          x={C}
+          y={y + 22}
+          textAnchor="middle"
+          fill={prize.ink}
+          fontWeight="800"
+          fontSize={secondSize}
+          letterSpacing={prize.label[1].length <= 3 ? 2 : 0}
+        >
+          {prize.label[1]}
+        </text>
+      </g>
     </g>
   );
 }
@@ -279,7 +281,7 @@ export default function Wheel({ onResult, disabled }) {
       <button
         onClick={spin}
         disabled={spinning || disabled}
-        className={`mt-10 rounded-full bg-gradient-to-b from-blue-400 to-blue-600 px-12 py-4 text-2xl font-extrabold text-white shadow-lg shadow-blue-600/30 ring-2 ring-white/60 transition focus:outline-none focus-visible:ring-4 focus-visible:ring-butter ${
+        className={`mt-10 rounded-full bg-[#879b82] px-12 py-4 text-2xl font-extrabold text-white shadow-lg shadow-[#879b82]/30 ring-2 ring-white/60 transition hover:bg-[#71856d] focus:outline-none focus-visible:ring-4 focus-visible:ring-[#c5b99f] ${
           spinning || disabled
             ? "cursor-not-allowed opacity-60"
             : "animate-pulseRing hover:scale-105 active:scale-95"

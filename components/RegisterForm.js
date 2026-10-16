@@ -36,7 +36,7 @@ export default function RegisterForm({ onSubmit }) {
     "w-full rounded-2xl border-2 border-blue-200 bg-white px-5 py-4 text-lg font-semibold text-blue-900 placeholder:text-blue-300 focus:border-blue-500 focus:outline-none focus:ring-4 focus:ring-blue-200";
 
   return (
-    <section className="flex min-h-screen items-center justify-center px-6">
+    <section className="flex min-h-screen items-center justify-center bg-[#e8d3ac] px-6">
       <form
         onSubmit={handleSubmit}
         noValidate
@@ -94,7 +94,7 @@ export default function RegisterForm({ onSubmit }) {
         <button
           type="submit"
           disabled={submitting}
-          className="mt-8 w-full rounded-full bg-blue-600 py-4 text-xl font-extrabold text-white shadow-lg shadow-blue-600/30 transition hover:bg-blue-700 focus:outline-none focus-visible:ring-4 focus-visible:ring-butter active:scale-95 disabled:cursor-wait disabled:opacity-70"
+          className="mt-8 w-full rounded-full bg-[#879b82] py-4 text-xl font-extrabold text-white shadow-lg shadow-[#879b82]/30 transition hover:bg-[#71856d] focus:outline-none focus-visible:ring-4 focus-visible:ring-[#c5b99f] active:scale-95 disabled:cursor-wait disabled:opacity-70"
         >
           {submitting ? "Guardando…" : "Ir a la ruleta"}
         </button>

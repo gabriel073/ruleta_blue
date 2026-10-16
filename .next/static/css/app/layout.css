@@ -818,19 +818,15 @@ video {
   --tw-bg-opacity: 1;
   background-color: rgb(232 211 172 / var(--tw-bg-opacity, 1));
 }
+.bg-\[\#e8d3ac\]\/75 {
+  background-color: rgb(232 211 172 / 0.75);
+}
 .bg-blue-100 {
   --tw-bg-opacity: 1;
   background-color: rgb(220 236 255 / var(--tw-bg-opacity, 1));
 }
-.bg-blue-600 {
-  --tw-bg-opacity: 1;
-  background-color: rgb(42 99 184 / var(--tw-bg-opacity, 1));
-}
 .bg-blue-900\/40 {
   background-color: rgb(27 52 89 / 0.4);
-}
-.bg-blue-900\/60 {
-  background-color: rgb(27 52 89 / 0.6);
 }
 .bg-white {
   --tw-bg-opacity: 1;
@@ -838,17 +834,6 @@ video {
 }
 .bg-white\/80 {
   background-color: rgb(255 255 255 / 0.8);
-}
-.bg-gradient-to-b {
-  background-image: linear-gradient(to bottom, var(--tw-gradient-stops));
-}
-.from-blue-400 {
-  --tw-gradient-from: #5e9bea var(--tw-gradient-from-position);
-  --tw-gradient-to: rgb(94 155 234 / 0) var(--tw-gradient-to-position);
-  --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to);
-}
-.to-blue-600 {
-  --tw-gradient-to: #2a63b8 var(--tw-gradient-to-position);
 }
 .p-8 {
   padding: 2rem;
@@ -979,10 +964,6 @@ video {
   --tw-shadow-color: rgb(135 155 130 / 0.3);
   --tw-shadow: var(--tw-shadow-colored);
 }
-.shadow-blue-600\/30 {
-  --tw-shadow-color: rgb(42 99 184 / 0.3);
-  --tw-shadow: var(--tw-shadow-colored);
-}
 .shadow-blue-900\/10 {
   --tw-shadow-color: rgb(27 52 89 / 0.1);
   --tw-shadow: var(--tw-shadow-colored);
@@ -1022,12 +1003,18 @@ video {
 
 html, body { height: 100%; }
 body {
-  --tw-bg-opacity: 1;
-  background-color: rgb(220 236 255 / var(--tw-bg-opacity, 1));
   --tw-text-opacity: 1;
   color: rgb(27 52 89 / var(--tw-text-opacity, 1));
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background-color: #e8d3ac;
+  caret-color: transparent;
+}
+
+input,
+textarea,
+[contenteditable="true"] {
+  caret-color: auto;
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -1057,11 +1044,6 @@ body {
 .hover\:bg-\[\#71856d\]:hover {
   --tw-bg-opacity: 1;
   background-color: rgb(113 133 109 / var(--tw-bg-opacity, 1));
-}
-
-.hover\:bg-blue-700:hover {
-  --tw-bg-opacity: 1;
-  background-color: rgb(35 78 146 / var(--tw-bg-opacity, 1));
 }
 
 .focus\:border-blue-500:focus {
@@ -1094,11 +1076,6 @@ body {
 .focus-visible\:ring-\[\#c5b99f\]:focus-visible {
   --tw-ring-opacity: 1;
   --tw-ring-color: rgb(197 185 159 / var(--tw-ring-opacity, 1));
-}
-
-.focus-visible\:ring-butter:focus-visible {
-  --tw-ring-opacity: 1;
-  --tw-ring-color: rgb(255 228 138 / var(--tw-ring-opacity, 1));
 }
 
 .active\:scale-95:active {

@@ -27,7 +27,7 @@ export default function PrizeModal({ user, prize, onRetry, onFinish }) {
       role="dialog"
       aria-modal="true"
       aria-labelledby="prize-title"
-      className="fixed inset-0 z-50 flex items-center justify-center bg-blue-900/60 px-5 backdrop-blur-sm animate-fadeIn"
+      className="fixed inset-0 z-50 flex items-center justify-center bg-[#e8d3ac]/75 px-5 backdrop-blur-sm animate-fadeIn"
     >
       <div className="w-full max-w-md animate-pop rounded-[2rem] bg-white p-8 text-center shadow-2xl">
         {isWin ? (
@@ -49,7 +49,7 @@ export default function PrizeModal({ user, prize, onRetry, onFinish }) {
             </p>
             <button
               onClick={onFinish}
-              className="mt-6 w-full rounded-full bg-blue-600 py-4 text-xl font-extrabold text-white transition hover:bg-blue-700 focus:outline-none focus-visible:ring-4 focus-visible:ring-butter active:scale-95"
+              className="mt-6 w-full rounded-full bg-[#879b82] py-4 text-xl font-extrabold text-white transition hover:bg-[#71856d] focus:outline-none focus-visible:ring-4 focus-visible:ring-[#c5b99f] active:scale-95"
             >
               Listo
             </button>
@@ -65,7 +65,7 @@ export default function PrizeModal({ user, prize, onRetry, onFinish }) {
             </p>
             <button
               onClick={onRetry}
-              className="mt-6 w-full rounded-full bg-blue-600 py-4 text-xl font-extrabold text-white transition hover:bg-blue-700 focus:outline-none focus-visible:ring-4 focus-visible:ring-butter active:scale-95"
+              className="mt-6 w-full rounded-full bg-[#879b82] py-4 text-xl font-extrabold text-white transition hover:bg-[#71856d] focus:outline-none focus-visible:ring-4 focus-visible:ring-[#c5b99f] active:scale-95"
             >
               Girar otra vez
             </button>
