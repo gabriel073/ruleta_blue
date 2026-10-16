@@ -6,15 +6,20 @@ import Wheel from "@/components/Wheel";
 import PrizeModal from "@/components/PrizeModal";
 import LogoMark from "@/components/LogoMark";
 
+// crypto.randomUUID solo existe en HTTPS/localhost; este reemplazo evita que falle al probar desde el celular por IP local
+function newId() {
+  if (globalThis.crypto?.randomUUID) return globalThis.crypto.randomUUID();
+  return `${Date.now().toString(36)}-${Math.random().toString(36).slice(2, 10)}`;
+}
+
 export default function Home() {
   const [step, setStep] = useState("splash"); // splash | form | wheel
   const [user, setUser] = useState(null);
   const [prize, setPrize] = useState(null);
   const [sheetsError, setSheetsError] = useState("");
-  const [whatsappStatus, setWhatsappStatus] = useState("");
 
   async function handleRegister(data) {
-    const participant = { ...data, id: crypto.randomUUID() };
+    const participant = { ...data, id: newId() };
     const response = await fetch("/api/participantes", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -32,7 +37,6 @@ export default function Home() {
   function handleResult(p) {
     setPrize(p);
     setSheetsError("");
-    setWhatsappStatus("");
     fetch("/api/participantes", {
       method: "PATCH",
       headers: { "Content-Type": "application/json" },
@@ -45,22 +49,12 @@ export default function Home() {
       .catch((error) => setSheetsError(error.message));
 
     if (p.type === "win") {
-      fetch("/api/whatsapp/ganador", {
+      // Aviso gratuito al dueño por Telegram. Es silencioso: si no está configurado o falla, la ganadora no se entera.
+      fetch("/api/avisos/ganador", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          name: user.name,
-          whatsapp: user.whatsapp,
-          whatsappConsent: user.whatsappConsent,
-          prize: p.title,
-        }),
-      })
-        .then(async (response) => {
-          const result = await response.json();
-          if (!response.ok || !result.ok) throw new Error(result.error || "No se pudo enviar el mensaje de WhatsApp.");
-          setWhatsappStatus("Te enviamos los detalles del premio por WhatsApp.");
-        })
-        .catch((error) => setWhatsappStatus(error.message));
+        body: JSON.stringify({ name: user.name, whatsapp: user.whatsapp, prize: p.title }),
+      }).catch(() => {});
     }
   }
 
@@ -83,13 +77,11 @@ export default function Home() {
             ¡Mucha suerte, {user.name}!
           </p>
           {sheetsError && <p role="alert" className="mb-3 text-center font-semibold text-rose-700">{sheetsError}</p>}
-          {whatsappStatus && <p role="status" className="mb-3 text-center font-semibold text-blue-800">{whatsappStatus}</p>}
           <Wheel onResult={handleResult} disabled={!!prize} />
           {prize && (
             <PrizeModal
               user={user}
               prize={prize}
-              whatsappStatus={whatsappStatus}
               onRetry={() => setPrize(null)}
               onFinish={reset}
             />

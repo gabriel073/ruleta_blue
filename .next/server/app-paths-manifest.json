@@ -1,5 +1,4 @@
 {
   "/api/participantes/route": "app/api/participantes/route.js",
-  "/page": "app/page.js",
-  "/api/whatsapp/ganador/route": "app/api/whatsapp/ganador/route.js"
+  "/api/avisos/ganador/route": "app/api/avisos/ganador/route.js"
 }

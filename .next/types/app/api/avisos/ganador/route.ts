@@ -1,8 +1,8 @@
-// File: D:\Mi_Carpeta\Programacion\proyectos\blue-ruleta\app\api\whatsapp\ganador\route.js
-import * as entry from '../../../../../../app/api/whatsapp/ganador/route.js'
+// File: D:\Mi_Carpeta\Programacion\proyectos\blue-ruleta\app\api\avisos\ganador\route.js
+import * as entry from '../../../../../../app/api/avisos/ganador/route.js'
 import type { NextRequest } from 'next/server.js'
 
-type TEntry = typeof import('../../../../../../app/api/whatsapp/ganador/route.js')
+type TEntry = typeof import('../../../../../../app/api/avisos/ganador/route.js')
 
 // Check that the entry is a valid entry
 checkFields<Diff<{

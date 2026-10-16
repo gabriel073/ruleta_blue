@@ -18,7 +18,7 @@ export default function RegisterForm({ onSubmit }) {
     if (!WHATSAPP_RE.test(whatsapp)) {
       next.whatsapp = "Ingresá exactamente 10 números, sin prefijo.";
     }
-    if (!whatsappConsent) next.whatsappConsent = "Necesitamos tu autorización para enviarte el resultado por WhatsApp.";
+    if (!whatsappConsent) next.whatsappConsent = "Necesitamos tu autorización para contactarte por WhatsApp si ganás.";
     setErrors(next);
     if (Object.keys(next).length === 0) {
       setSubmitting(true);
@@ -87,7 +87,7 @@ export default function RegisterForm({ onSubmit }) {
             className="mt-1 h-5 w-5 accent-blue-700"
             aria-invalid={!!errors.whatsappConsent}
           />
-          <span>Acepto recibir por WhatsApp un mensaje con el resultado si gano.</span>
+          <span>Acepto que Blue me contacte por WhatsApp para entregarme mi premio si gano.</span>
         </label>
         {errors.whatsappConsent && <span className="mt-1 block text-sm font-bold text-rose-600">{errors.whatsappConsent}</span>}
 

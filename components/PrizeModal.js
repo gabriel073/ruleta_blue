@@ -14,7 +14,7 @@ function celebrate(big) {
   confetti({ particleCount: big ? 220 : 120, spread: 100, startVelocity: 45, origin: { y: 0.6 }, colors: COLORS });
 }
 
-export default function PrizeModal({ user, prize, whatsappStatus, onRetry, onFinish }) {
+export default function PrizeModal({ user, prize, onRetry, onFinish }) {
   const isWin = prize.type === "win";
   const isVoucher = prize.id === "voucher";
 
@@ -47,11 +47,6 @@ export default function PrizeModal({ user, prize, whatsappStatus, onRetry, onFin
             <p className="mt-4 text-sm font-semibold text-blue-700">
               Registramos tu premio con {user.whatsapp}. Mostrá esta pantalla en el local.
             </p>
-            {whatsappStatus && (
-              <p role="status" className="mt-3 text-sm font-semibold text-blue-800">
-                {whatsappStatus}
-              </p>
-            )}
             <button
               onClick={onFinish}
               className="mt-6 w-full rounded-full bg-blue-600 py-4 text-xl font-extrabold text-white transition hover:bg-blue-700 focus:outline-none focus-visible:ring-4 focus-visible:ring-butter active:scale-95"
