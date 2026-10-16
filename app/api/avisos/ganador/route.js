@@ -10,9 +10,9 @@ const TELEGRAM_URL = process.env.TELEGRAM_API_URL || "https://api.telegram.org";
 // Mensaje que se le va a enviar a la ganadora por WhatsApp. Editalo a gusto:
 // se abre ya escrito al tocar el botón del aviso; solo hay que apretar "enviar".
 const winnerMessage = (name, prize) =>
-  `¡Hola ${name}! 🎉 ¡Felicitaciones! Ganaste ${prize} en Blue. \n\n` +
+  `¡Hola ${name}! 🎉 ¡Felicitaciones! Ganaste ${prize} en Blue Corrientes. \n\n` +
   `Mostrá este mensaje en el local para reclamar tu premio. 🎁\n` +
-   ` ✨\n✨\n✨\n✨\n` +
+   `✨\n✨\n✨\n✨\n` +
   `Seguinos en nuestras redes para no perderte las novedades, premios y ofertas:\n` +
   `📸 Instagram: @bluebabykids\n` +
   `🎵 TikTok: @bluebaby_h`;
