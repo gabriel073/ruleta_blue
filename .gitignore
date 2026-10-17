@@ -15,3 +15,5 @@ dist/
 build/
 *.log
 node_modules
+
+.next/
